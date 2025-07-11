@@ -114,7 +114,7 @@ function FormulationForm({ initialQuery = '' }: FormulationFormProps) {
           </div>
         )}
         
-        <button type="submit" disabled={loading || (validationResult && !validationResult.is_sufficient)}>
+        <button type="submit" disabled={loading || (validationResult ? !validationResult.is_sufficient : false)}>
           {loading ? 'Generating...' : 'Generate Formulation'}
         </button>
       </form>

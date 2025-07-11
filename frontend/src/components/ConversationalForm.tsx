@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   startConversation, 
   continueConversation, 
-  aggregateConversationIntent,
   ConversationResponse,
-  ConversationMessage,
-  ConversationIntent
+  ConversationMessage
 } from '../services/conversation_api';
 
 interface ConversationalFormProps {
-  onFormulationReady: (enhancedQuery: string, intentAnalysis: any) => void;
+  onFormulationReady: (enhancedQuery: string) => void;
 }
 
 const ConversationalForm: React.FC<ConversationalFormProps> = ({ onFormulationReady }) => {
@@ -18,8 +16,6 @@ const ConversationalForm: React.FC<ConversationalFormProps> = ({ onFormulationRe
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isConversationComplete, setIsConversationComplete] = useState(false);
-  const [enhancedQuery, setEnhancedQuery] = useState<string>('');
-  const [intentAnalysis, setIntentAnalysis] = useState<any>(null);
   const [exchangeCount, setExchangeCount] = useState<number>(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -59,9 +55,7 @@ const ConversationalForm: React.FC<ConversationalFormProps> = ({ onFormulationRe
       
       if (response.ready_for_formulation) {
         setIsConversationComplete(true);
-        setEnhancedQuery(response.enhanced_query || '');
-        setIntentAnalysis(response.intent_analysis || {});
-        onFormulationReady(response.enhanced_query || '', response.intent_analysis || {});
+        onFormulationReady(response.enhanced_query || '');
       }
     } catch (error) {
       console.error('Error starting conversation:', error);
@@ -86,9 +80,7 @@ const ConversationalForm: React.FC<ConversationalFormProps> = ({ onFormulationRe
       
       if (response.ready_for_formulation) {
         setIsConversationComplete(true);
-        setEnhancedQuery(response.enhanced_query || '');
-        setIntentAnalysis(response.intent_analysis || {});
-        onFormulationReady(response.enhanced_query || '', response.intent_analysis || {});
+        onFormulationReady(response.enhanced_query || '');
       }
     } catch (error) {
       console.error('Error continuing conversation:', error);

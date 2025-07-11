@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ConversationalForm from './components/ConversationalForm';
 import { FaLeaf } from 'react-icons/fa';
 
@@ -40,7 +40,7 @@ function App() {
     }
   }, [isGenerating, showStatusWindow]);
 
-  const handleFormulationReady = (enhancedQuery: string, intentAnalysis: any) => {
+  const handleFormulationReady = (enhancedQuery: string) => {
     setReadyFormulation(enhancedQuery);
     // Auto-scroll to the enriched query section
     setTimeout(() => {
@@ -108,37 +108,31 @@ function App() {
   // Formulation component definitions
   const formulationComponents = [
     {
-      
       title: "Base Components",
       description: "Primary ingredients that form the foundation of your formulation",
       examples: "Water, oils, waxes, or other main carriers"
     },
     {
-      
       title: "Active Ingredients",
       description: "Key functional ingredients that provide the main benefits",
       examples: "Vitamins, antioxidants, peptides, or botanical extracts"
     },
     {
-      
       title: "Emollients & Humectants",
       description: "Ingredients that improve texture and moisture retention",
       examples: "Glycerin, shea butter, jojoba oil, or hyaluronic acid"
     },
     {
-      
       title: "Preservatives & Stabilizers",
       description: "Ingredients that maintain product safety and shelf life",
       examples: "Natural preservatives, antioxidants, or pH stabilizers"
     },
     {
-      
       title: "Enhancers & Additives",
       description: "Optional ingredients that improve performance or aesthetics",
       examples: "Fragrances, colorants, thickeners, or penetration enhancers"
     },
     {
-     
       title: "Balancing Agents",
       description: "Ingredients that ensure proper formulation stability",
       examples: "pH adjusters, emulsifiers, or viscosity modifiers"
@@ -236,7 +230,6 @@ function App() {
                 <div className="components-grid">
                   {formulationComponents.map((component, index) => (
                     <div key={index} className="component-card">
-                      <div className="component-icon">{component.icon}</div>
                       <div className="component-content">
                         <h5 className="component-title">{component.title}</h5>
                         <p className="component-description">{component.description}</p>
