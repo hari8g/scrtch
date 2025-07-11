@@ -1,3 +1,5 @@
+import { API_CONFIG } from '../config/api';
+
 export interface Ingredient {
   name: string;
   attributes: Record<string, any>;
@@ -24,7 +26,7 @@ export interface QueryValidationResponse {
 }
 
 export async function generateFormulation(query: string): Promise<FormulationResponse> {
-  const res = await fetch('http://localhost:8000/formulation/', {
+  const res = await fetch(API_CONFIG.FORMULATION_ENDPOINTS.GENERATE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),
@@ -34,7 +36,7 @@ export async function generateFormulation(query: string): Promise<FormulationRes
 }
 
 export async function validateQuery(query: string): Promise<QueryValidationResponse> {
-  const res = await fetch('http://localhost:8000/formulation/validate', {
+  const res = await fetch(API_CONFIG.FORMULATION_ENDPOINTS.VALIDATE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),
@@ -44,7 +46,7 @@ export async function validateQuery(query: string): Promise<QueryValidationRespo
 }
 
 export async function getQuerySuggestions(query: string): Promise<string[]> {
-  const res = await fetch('http://localhost:8000/formulation/suggestions', {
+  const res = await fetch(API_CONFIG.FORMULATION_ENDPOINTS.SUGGESTIONS, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),

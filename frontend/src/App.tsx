@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import ConversationalForm from './components/ConversationalForm';
 import { FaLeaf } from 'react-icons/fa';
+import { API_CONFIG } from './config/api';
 
 function App() {
   const [readyFormulation, setReadyFormulation] = useState<string>('');
@@ -59,7 +60,7 @@ function App() {
     setStatusMessage('');
     setStatusStage('');
     // Use SSE for real-time status updates
-    const evtSource = new EventSource(`http://localhost:8000/formulation/stream?query=${encodeURIComponent(readyFormulation)}`);
+    const evtSource = new EventSource(`${API_CONFIG.FORMULATION_ENDPOINTS.STREAM}?query=${encodeURIComponent(readyFormulation)}`);
     evtSource.onopen = () => {
       console.log('SSE connection opened');
     };
@@ -83,7 +84,7 @@ function App() {
       }
     };
     try {
-      const response = await fetch('http://localhost:8000/formulation/', {
+      const response = await fetch(API_CONFIG.FORMULATION_ENDPOINTS.GENERATE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: readyFormulation }),

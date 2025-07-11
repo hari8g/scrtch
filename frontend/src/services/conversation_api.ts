@@ -1,3 +1,5 @@
+import { API_CONFIG } from '../config/api';
+
 export interface ConversationMessage {
   role: 'user' | 'assistant' | 'system';
   content: string;
@@ -37,7 +39,7 @@ export interface ConversationIntent {
 }
 
 export async function startConversation(initial_query: string): Promise<ConversationResponse> {
-  const res = await fetch('http://localhost:8000/conversation/start', {
+  const res = await fetch(API_CONFIG.CONVERSATION_ENDPOINTS.START, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ initial_query }),
@@ -51,7 +53,7 @@ export async function continueConversation(
   user_response: string,
   conversation_history: ConversationMessage[]
 ): Promise<ConversationResponse> {
-  const res = await fetch('http://localhost:8000/conversation/continue', {
+  const res = await fetch(API_CONFIG.CONVERSATION_ENDPOINTS.CONTINUE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
@@ -67,7 +69,7 @@ export async function continueConversation(
 export async function aggregateConversationIntent(
   conversation_history: ConversationMessage[]
 ): Promise<ConversationIntent> {
-  const res = await fetch('http://localhost:8000/conversation/aggregate-intent', {
+  const res = await fetch(API_CONFIG.CONVERSATION_ENDPOINTS.AGGREGATE_INTENT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ conversation_history }),
@@ -77,7 +79,7 @@ export async function aggregateConversationIntent(
 }
 
 export async function streamConversation(messages: ConversationMessage[]): Promise<ReadableStream> {
-  const res = await fetch('http://localhost:8000/conversation/stream', {
+  const res = await fetch(API_CONFIG.CONVERSATION_ENDPOINTS.STREAM, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages }),
@@ -89,7 +91,7 @@ export async function streamConversation(messages: ConversationMessage[]): Promi
 export async function getConversationSummary(
   conversation_history: ConversationMessage[]
 ): Promise<ConversationSummary> {
-  const res = await fetch('http://localhost:8000/conversation/summary', {
+  const res = await fetch(API_CONFIG.CONVERSATION_ENDPOINTS.SUMMARY, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ conversation_history }),
