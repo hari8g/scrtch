@@ -8,6 +8,8 @@ from app.services.query_enhancement_service import QueryEnhancementService
 
 class FormulationService:
     def __init__(self):
+        if not settings.openai_api_key:
+            raise ValueError("OpenAI API key is not configured. Please set OPENAI_API_KEY environment variable.")
         self.client = OpenAI(api_key=settings.openai_api_key)
         self.query_enhancer = QueryEnhancementService()
     
